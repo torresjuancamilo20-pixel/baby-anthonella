@@ -325,8 +325,8 @@ async function load(){
 }
 
 /* ====== ARRANQUE ====== */
+(function(){ var _l = $("#loading"); if(_l) _l.style.display = "none"; })();
 buildStatic();
-$("#loading").style.display = "none";
 refreshAll();
 
 (function init(){
