@@ -84,11 +84,24 @@
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 20px;border-radius:999px;box-shadow:var(--shadow);font-size:13.5px;font-weight:600;z-index:80;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .offline{text-align:center;font-size:12px;color:var(--ink-soft);background:var(--blush-soft);border-radius:12px;padding:9px 14px;margin:0 18px 10px;}
+
+  /* ===== Fondo castillo animado ===== */
+  .bg-castle{position:fixed;inset:-4%;z-index:-2;background:#fbe4ea url("castle.webp") center center/cover no-repeat;animation:castleFloat 14s ease-in-out infinite;will-change:transform;}
+  .bg-glow{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(40% 35% at 50% 45%, rgba(255,255,255,.45), transparent 70%);animation:glow 7s ease-in-out infinite;}
+  .sparkle{position:fixed;z-index:-1;pointer-events:none;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px rgba(255,255,255,.9),0 0 18px 6px rgba(255,190,210,.6);opacity:0;animation:twinkle 5s ease-in-out infinite;}
+  @keyframes castleFloat{0%,100%{transform:translateY(0) scale(1.02);}50%{transform:translateY(-2.2%) scale(1.06);}}
+  @keyframes glow{0%,100%{opacity:.35;}50%{opacity:.85;}}
+  @keyframes twinkle{0%,100%{opacity:0;transform:translateY(0) scale(.4);}50%{opacity:1;transform:translateY(-14px) scale(1);}}
+  @media (prefers-reduced-motion:reduce){.bg-castle,.bg-glow,.sparkle{animation:none;}}
+  body{background:transparent !important;}
+  .hero{background:transparent !important;}
+  .hero::after{display:none;}
 </style>
 </head>
 <body>
+  <div class="bg-castle" aria-hidden="true"></div><div class="bg-glow" aria-hidden="true"></div>
+  <span class="sparkle" style="left:22%;top:30%;animation-delay:0s"></span><span class="sparkle" style="left:70%;top:22%;animation-delay:1.2s"></span><span class="sparkle" style="left:35%;top:60%;animation-delay:2.4s"></span><span class="sparkle" style="left:80%;top:55%;animation-delay:3.1s"></span><span class="sparkle" style="left:50%;top:15%;animation-delay:1.8s"></span><span class="sparkle" style="left:15%;top:75%;animation-delay:4s"></span><span class="sparkle" style="left:62%;top:80%;animation-delay:0.6s"></span><span class="sparkle" style="left:88%;top:35%;animation-delay:2.9s"></span>
   <header class="hero">
-    <img src="hero.jpg" alt="Cielo rosado con nubes y arcos" />
     <div class="hero-inner">
       <div class="eyebrow">Baby Shower</div>
       <h1>¡Pronto llega Anthonella!</h1>
