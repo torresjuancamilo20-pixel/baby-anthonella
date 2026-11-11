@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Baby Shower de Anthonella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --blush:#f6d6dc;--blush-soft:#fbe8ec;--cream:#fdf4f1;
+    --rose:#e3a3b1;--rose-deep:#c9788a;--ink:#8a5964;--ink-soft:#a87a84;
+    --card:#fffaf9;--line:#f0d4d9;--ok:#cf8fa0;
+    --shadow:0 10px 30px rgba(190,120,135,.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Quicksand',system-ui,sans-serif;color:var(--ink);
+    background:radial-gradient(1200px 600px at 50% -200px, #fff 0%, var(--cream) 60%),linear-gradient(180deg,var(--cream) 0%, #fbeef0 100%);
+    background-attachment:fixed;-webkit-font-smoothing:antialiased;
+  }
+  .hero{position:relative;min-height:clamp(340px,52vw,560px);display:flex;align-items:flex-end;justify-content:center;text-align:center;overflow:hidden;background:var(--blush);}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:saturate(1.02);}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(253,244,241,0) 40%, rgba(253,244,241,.35) 72%, var(--cream) 100%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:2;padding:0 22px 42px;max-width:720px;}
+  .eyebrow{letter-spacing:.42em;text-transform:uppercase;font-size:13px;font-weight:600;color:var(--rose-deep);margin-bottom:10px;opacity:.9;}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(38px,8vw,72px);line-height:1.02;margin:0 0 14px;color:#92606c;text-shadow:0 2px 18px rgba(255,255,255,.55);}
+  .hero p{font-size:clamp(14px,2.5vw,17px);line-height:1.55;color:var(--ink);margin:0 auto;max-width:520px;background:rgba(255,250,249,.55);padding:10px 16px;border-radius:16px;backdrop-filter:blur(2px);}
+  .hero .date-badge{display:inline-block;margin-top:16px;font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.6vw,20px);font-weight:600;letter-spacing:.08em;color:#92606c;background:rgba(255,250,249,.7);padding:7px 20px;border-radius:999px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(190,120,135,.12);}
+  .progress-wrap{position:sticky;top:0;z-index:20;background:rgba(253,244,241,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .progress{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .progress .count{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--rose-deep);white-space:nowrap;}
+  .bar{flex:1;min-width:140px;height:10px;border-radius:999px;background:var(--blush-soft);overflow:hidden;box-shadow:inset 0 1px 2px rgba(190,120,135,.12);}
+  .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--rose-deep));border-radius:999px;transition:width .5s ease;}
+  .progress .hint{font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+  main{max-width:1040px;margin:0 auto;padding:26px 18px 70px;}
+  .cat{margin:30px 0 14px;display:flex;align-items:center;gap:12px;}
+  .cat h2{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,30px);font-weight:600;color:#9a6673;margin:0;white-space:nowrap;}
+  .cat .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+  .cat .emoji{font-size:20px;}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blush),var(--rose));opacity:.8;}
+  .card.taken{background:#fdf0f2;}
+  .card .top{display:flex;flex-direction:column;gap:3px;}
+  .card h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;line-height:1.1;margin:2px 0 0;color:#7e515c;}
+  .card .detail{font-size:12.5px;color:var(--ink-soft);font-weight:500;}
+  .reservers{display:flex;flex-direction:column;gap:7px;margin-top:2px;}
+  .reserver{display:flex;align-items:center;gap:8px;background:var(--blush-soft);border-radius:12px;padding:7px 10px;font-size:13px;}
+  .reserver .tick{width:20px;height:20px;border-radius:50%;background:var(--ok);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .reserver .who b{color:var(--ink);font-weight:600;}
+  .reserver .who small{display:block;font-size:10.5px;color:var(--ink-soft);letter-spacing:.02em;}
+  .reserver .free{margin-left:auto;border:none;background:transparent;color:var(--ink-soft);font-size:11px;cursor:pointer;text-decoration:underline;padding:4px;font-family:inherit;}
+  .reserver .free:hover{color:var(--rose-deep);}
+  .slots{font-size:11.5px;color:var(--ink-soft);margin-top:-2px;}
+  .btn{margin-top:auto;border:none;cursor:pointer;font-family:'Quicksand',sans-serif;font-weight:600;font-size:14px;color:#fff;background:linear-gradient(135deg,var(--rose),var(--rose-deep));padding:11px 14px;border-radius:14px;box-shadow:0 6px 16px rgba(201,120,138,.3);transition:transform .15s ease, box-shadow .15s ease, opacity .15s;}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 9px 20px rgba(201,120,138,.38);}
+  .btn:active{transform:translateY(0);}
+  .btn.full{background:var(--blush-soft);color:var(--rose-deep);box-shadow:none;cursor:default;font-weight:600;}
+  .btn.full:hover{transform:none;}
+  .loading{text-align:center;color:var(--ink-soft);padding:50px 20px;font-size:15px;}
+  .badge-done{position:absolute;top:10px;right:-34px;background:var(--rose);color:#fff;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 36px;transform:rotate(45deg);box-shadow:0 4px 10px rgba(201,120,138,.3);}
+  footer{text-align:center;padding:30px 20px 46px;color:var(--ink-soft);font-size:13px;}
+  footer .heart{color:var(--rose-deep);}
+  .overlay{position:fixed;inset:0;z-index:60;background:rgba(138,89,100,.28);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);border-radius:24px;width:100%;max-width:380px;padding:26px 24px 22px;box-shadow:0 24px 60px rgba(150,90,105,.35);border:1px solid var(--line);animation:pop .22s ease;}
+  @keyframes pop{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal h3{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;margin:0 0 4px;color:#7e515c;}
+  .modal .gift{font-size:13px;color:var(--rose-deep);font-weight:600;margin-bottom:16px;}
+  .modal label{font-size:12.5px;color:var(--ink-soft);font-weight:600;display:block;margin-bottom:6px;}
+  .modal input{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font-family:inherit;font-size:15px;color:var(--ink);outline:none;transition:border-color .15s;}
+  .modal input:focus{border-color:var(--rose);}
+  .modal .actions{display:flex;gap:10px;margin-top:18px;}
+  .modal .actions button{flex:1;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;padding:12px;border-radius:14px;transition:opacity .15s,transform .15s;}
+  .modal .cancel{background:var(--blush-soft);color:var(--rose-deep);}
+  .modal .confirm{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;}
+  .modal .confirm:disabled{opacity:.5;cursor:default;}
+  .modal .msg{font-size:12px;color:var(--rose-deep);margin-top:10px;min-height:16px;text-align:center;}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#fff;color:var(--ink);border:1px solid var(--line);padding:12px 20px;border-radius:999px;box-shadow:var(--shadow);font-size:13.5px;font-weight:600;z-index:80;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .offline{text-align:center;font-size:12px;color:var(--ink-soft);background:var(--blush-soft);border-radius:12px;padding:9px 14px;margin:0 18px 10px;}
+</style>
+</head>
+<body>
+  <header class="hero">
+    <img src="hero.jpg" alt="Cielo rosado con nubes y arcos" />
+    <div class="hero-inner">
+      <div class="eyebrow">Baby Shower</div>
+      <h1>¡Pronto llega Anthonella!</h1>
+      <p>Elige el regalo que te gustaría dar. Al apartarlo, queda reservado a tu nombre para que no se repita.</p>
+      <div class="date-badge">15 de noviembre de 2026</div>
+    </div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress">
+      <div class="count" id="count">· · ·</div>
+      <div class="bar"><span id="barFill"></span></div>
+      <div class="hint" id="hint">regalos apartados</div>
+    </div>
+  </div>
+
+  <div class="offline" id="offline" style="display:none"></div>
+
+  <main id="app">
+    <div class="loading" id="loading">Cargando la lista de regalos… ☁️</div>
+  </main>
+
+  <footer>
+    Hecho con mucho cariño <span class="heart">🩷</span> · Cada regalo se aparta para no repetir.
+  </footer>
+
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h3>Apartar regalo</h3>
+      <div class="gift" id="modalGift"></div>
+      <label for="nameInput">¿A nombre de quién?</label>
+      <input id="nameInput" type="text" placeholder="Ej: Tía Diana" maxlength="40" autocomplete="name" />
+      <div class="msg" id="modalMsg"></div>
+      <div class="actions">
+        <button class="cancel" id="cancelBtn">Cancelar</button>
+        <button class="confirm" id="confirmBtn">Apartar 🩷</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ====== CONFIGURACIÓN SUPABASE ====== */
+const SUPABASE_URL = "https://gbemgbgjgzybieejdpar.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZW1nYmdqZ3p5YmllZWpkcGFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3Njc5NjAsImV4cCI6MjA5OTM0Mzk2MH0.DmvePsWwvCDozYUNooyqYr4Ns5mPqKOGtf-Ps5SsCY0";
+
+/* ============ CATÁLOGO DE REGALOS ============ */
+const CATALOG = [
+  {cat:"Ropa y accesorios", emoji:"👶🏻", items:[
+    {id:"g01", name:"Bodies", detail:"Talla 0 meses"},
+    {id:"g02", name:"Bodies", detail:"Talla 0–3 meses"},
+    {id:"g03", name:"Pantalones", detail:"Talla 0–1 meses"},
+    {id:"g04", name:"Pantalones", detail:"Talla 0–3 meses"},
+    {id:"g05", name:"Medias", detail:"Talla 0–1 meses"},
+    {id:"g06", name:"Medias", detail:"Talla 0–3 meses"},
+    {id:"g07", name:"Pijamas con zíper", detail:"Talla 0 meses"},
+    {id:"g08", name:"Pijamas con zíper", detail:"Talla 0–3 meses"},
+    {id:"g09", name:"Gorritos", detail:""},
+    {id:"g10", name:"Mitones", detail:""},
+    {id:"g11", name:"Cobijas para bebé", detail:""},
+    {id:"g12", name:"Saco de dormir", detail:"Talla 0–3 meses"},
+    {id:"g13", name:"Baberos", detail:""},
+    {id:"g14", name:"Pañitos para sacar gases", detail:""},
+    {id:"g15", name:"Toallitas para la boquita", detail:""},
+  ]},
+  {cat:"Alimentación y lactancia", emoji:"🍼", items:[
+    {id:"g16", name:"Set de teteros", detail:"Philips Avent"},
+    {id:"g17", name:"Esterilizador de teteros", detail:""},
+    {id:"g18", name:"Kit limpiador de teteros", detail:""},
+    {id:"g19", name:"Escurridor de teteros", detail:""},
+    {id:"g20", name:"Bolsas de almacenamiento de leche materna", detail:""},
+    {id:"g21", name:"Cojín de lactancia", detail:""},
+    {id:"g22", name:"Protectores de lactancia", detail:""},
+    {id:"g23", name:"Cobertor de lactancia", detail:""},
+    {id:"g24", name:"Termo para teteros", detail:""},
+  ]},
+  {cat:"Descanso y habitación", emoji:"🌙", items:[
+    {id:"g25", name:"Colecho", detail:""},
+    {id:"g26", name:"Sábanas blancas para colecho", detail:""},
+    {id:"g27", name:"Silla mecedora", detail:""},
+    {id:"g28", name:"Máquina de sonido blanco", detail:""},
+    {id:"g29", name:"Protector impermeable para colchón", detail:""},
+    {id:"g30", name:"Canastas organizadoras", detail:""},
+    {id:"g31", name:"Organizadores de cajones", detail:""},
+    {id:"g32", name:"Lámpara nocturna", detail:""},
+    {id:"g33", name:"Nido de colecho", detail:""},
+  ]},
+  {cat:"Baño, higiene y cuidado", emoji:"🛁", items:[
+    {id:"g34", name:"Bañera con patas", detail:""},
+    {id:"g35", name:"Kit de aseo e higiene para bebé", detail:""},
+    {id:"g36", name:"Toallas para bebé", detail:""},
+    {id:"g37", name:"Aspirador nasal", detail:""},
+    {id:"g38", name:"Lima eléctrica para uñas", detail:""},
+    {id:"g39", name:"Termómetro digital", detail:""},
+    {id:"g40", name:"Termómetro para agua", detail:""},
+    {id:"g41", name:"Colchón cambiador", detail:""},
+    {id:"g42", name:"Calentador de pañitos húmedos", detail:""},
+    {id:"g43", name:"Paños de algodón", detail:""},
+  ]},
+  {cat:"Paseo y comodidad", emoji:"🧺", items:[
+    {id:"g44", name:"Carro organizador", detail:""},
+    {id:"g45", name:"Fular portabebé", detail:""},
+    {id:"g46", name:"Cambiador portátil", detail:""},
+    {id:"g47", name:"Espejo para silla de carro", detail:""},
+    {id:"g48", name:"Cobertor para coche", detail:""},
+  ]},
+  {cat:"Estimulación y recuerdos", emoji:"🧸", items:[
+    {id:"g49", name:"Baby Gym", detail:""},
+    {id:"g50", name:"Juguetes sensoriales", detail:""},
+    {id:"g51", name:"Sonajeros", detail:""},
+    {id:"g52", name:"Libros de tela", detail:""},
+    {id:"g53", name:"Caja de recuerdos de Anthonella", detail:""},
+  ]},
+  {cat:"Organización y otros accesorios", emoji:"🎀", items:[
+    {id:"g54", name:"Organizador de pañales", detail:""},
+    {id:"g55", name:"Canasto para ropa sucia", detail:""},
+    {id:"g56", name:"Separadores de tallas para clóset", detail:""},
+    {id:"g57", name:"Chupos", detail:"Talla 0–3 meses"},
+    {id:"g58", name:"Chupos con estuche protector", detail:""},
+    {id:"g59", name:"Organizador de accesorios de bebé", detail:""},
+    {id:"g60", name:"Kit de cuidado adicional para bebé", detail:""},
+  ]},
+];
+
+const ITEM_BY_ID = {};
+let TOTAL = 0;
+CATALOG.forEach(s => s.items.forEach(it => { ITEM_BY_ID[it.id] = it; TOTAL++; }));
+
+let sb = null;
+let reservations = {};   // giftId -> [{id, name}]
+let dbReady = false;
+let pending = null;
+
+const $ = sel => document.querySelector(sel);
+function reserversFor(id){ return reservations[id] || []; }
+
+function buildStatic(){
+  const app = $("#app");
+  app.innerHTML = "";
+  CATALOG.forEach(section => {
+    const cat = document.createElement("div");
+    cat.className = "cat";
+    cat.innerHTML = `<span class="emoji">${section.emoji}</span><h2>${section.cat}</h2><span class="rule"></span>`;
+    app.appendChild(cat);
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    section.items.forEach(it => grid.appendChild(cardEl(it)));
+    app.appendChild(grid);
+  });
+}
+function cardEl(it){ const el = document.createElement("div"); el.className = "card"; el.id = "card-" + it.id; renderCard(el, it); return el; }
+
+function renderCard(el, it){
+  const res = reserversFor(it.id);
+  const full = res.length >= 1;
+  el.classList.toggle("taken", full);
+  let html = "";
+  if(full){ html += `<div class="badge-done">Apartado</div>`; }
+  html += `<div class="top"><h3>${it.name}</h3>`;
+  if(it.detail){ html += `<span class="detail">${it.detail}</span>`; }
+  html += `</div>`;
+  if(res.length){
+    html += `<div class="reservers">`;
+    res.forEach(r => {
+      html += `<div class="reserver"><span class="tick">✓</span><span class="who"><small>Apartado por</small><b>${escapeHtml(r.name)}</b></span><button class="free" data-free="${r.id}">Liberar</button></div>`;
+    });
+    html += `</div>`;
+  }
+  if(!full){
+    const label = dbReady ? "Apartar este regalo 🩷" : "Cargando…";
+    html += `<button class="btn ${dbReady?'':'full'}" data-reserve="${it.id}" ${dbReady?'':'disabled'}>${label}</button>`;
+  } else {
+    html += `<button class="btn full" disabled>¡Ya tiene quien lo dé! 🩷</button>`;
+  }
+  el.innerHTML = html;
+}
+function updateCard(id){ const it = ITEM_BY_ID[id]; const el = $("#card-" + id); if(it && el) renderCard(el, it); }
+function refreshAll(){ Object.keys(ITEM_BY_ID).forEach(updateCard); updateProgress(); }
+function updateProgress(){
+  let done = 0;
+  CATALOG.forEach(s => s.items.forEach(it => { if(reserversFor(it.id).length >= 1) done++; }));
+  $("#count").textContent = `${done} de ${TOTAL} apartados`;
+  $("#barFill").style.width = (done/TOTAL*100).toFixed(1) + "%";
+  $("#hint").textContent = done === TOTAL ? "¡Completos! Gracias a todos 🩷" : "regalos apartados";
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function openModal(it){
+  pending = it;
+  $("#modalGift").textContent = it.name + (it.detail ? " · " + it.detail : "");
+  $("#modalMsg").textContent = "";
+  const input = $("#nameInput");
+  try { input.value = localStorage.getItem("as_name") || ""; } catch(e){ input.value = ""; }
+  $("#overlay").classList.add("open");
+  setTimeout(()=>input.focus(), 50);
+}
+function closeModal(){ $("#overlay").classList.remove("open"); pending = null; }
+
+async function confirmReserve(){
+  if(!pending || !sb) return;
+  const name = $("#nameInput").value.trim();
+  if(name.length < 2){ $("#modalMsg").textContent = "Escribe tu nombre 🩷"; return; }
+  const it = pending;
+  if(reserversFor(it.id).length >= 1){ $("#modalMsg").textContent = "¡Ups! Alguien lo acaba de apartar."; setTimeout(closeModal, 1200); return; }
+  $("#confirmBtn").disabled = true;
+  $("#modalMsg").textContent = "Guardando…";
+  try{ localStorage.setItem("as_name", name); }catch(e){}
+  const { error } = await sb.from("reservas").insert({ gift_id: it.id, nombre: name });
+  $("#confirmBtn").disabled = false;
+  if(error){
+    if(error.code === "23505"){ $("#modalMsg").textContent = "¡Alguien lo acaba de apartar! 🩷"; await load(); setTimeout(closeModal, 1200); }
+    else { $("#modalMsg").textContent = "No se pudo guardar. Intenta de nuevo."; }
+    return;
+  }
+  closeModal();
+  showToast(`¡Gracias ${name.split(" ")[0]}! Apartaste "${it.name}" 🩷`);
+  await load();
+}
+
+async function freeReservation(rid){
+  if(!sb) return;
+  const { error } = await sb.from("reservas").delete().eq("id", rid);
+  if(error){ showToast("No se pudo liberar. Intenta de nuevo."); return; }
+  showToast("Regalo liberado 🩷");
+  await load();
+}
+
+let toastT;
+function showToast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("show"), 2600); }
+
+document.addEventListener("click", e => {
+  const r = e.target.closest("[data-reserve]");
+  if(r){ const it = ITEM_BY_ID[r.getAttribute("data-reserve")]; if(it) openModal(it); return; }
+  const f = e.target.closest("[data-free]");
+  if(f){ freeReservation(f.getAttribute("data-free")); return; }
+});
+$("#cancelBtn").addEventListener("click", closeModal);
+$("#confirmBtn").addEventListener("click", confirmReserve);
+$("#overlay").addEventListener("click", e => { if(e.target === $("#overlay")) closeModal(); });
+$("#nameInput").addEventListener("keydown", e => { if(e.key === "Enter") confirmReserve(); });
+
+async function load(){
+  if(!sb) return;
+  const { data, error } = await sb.from("reservas").select("id, gift_id, nombre").order("created_at", { ascending: true });
+  if(error){ $("#offline").style.display = "block"; $("#offline").textContent = "Hubo un problema cargando las reservas. Recarga la página. 🩷"; return; }
+  const next = {};
+  data.forEach(r => { (next[r.gift_id] = next[r.gift_id] || []).push({ id: r.id, name: r.nombre || "Invitado" }); });
+  reservations = next;
+  $("#offline").style.display = "none";
+  refreshAll();
+}
+
+/* ====== ARRANQUE ====== */
+buildStatic();
+$("#loading").style.display = "none";
+refreshAll();
+
+(function init(){
+  if(!window.supabase || SUPABASE_URL.indexOf("__") === 0){
+    $("#offline").style.display = "block";
+    $("#offline").textContent = "Configura las claves de Supabase para activar las reservas.";
+    return;
+  }
+  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  dbReady = true;
+  load();
+  // Actualización en vivo para todos los invitados
+  sb.channel("reservas-live")
+    .on("postgres_changes", { event: "*", schema: "public", table: "reservas" }, () => load())
+    .subscribe();
+})();
+</script>
+</body>
+</html>
