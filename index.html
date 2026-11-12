@@ -86,17 +86,41 @@
   .offline{text-align:center;font-size:12px;color:var(--ink-soft);background:var(--blush-soft);border-radius:12px;padding:9px 14px;margin:0 18px 10px;}
 
 
-  /* ===== Castillo estilo Disney ===== */
-  .castle-wrap{position:relative;width:min(320px,72vw);margin:0 auto 6px;aspect-ratio:520/752;}
-  .castle-wrap img{width:100%;height:100%;object-fit:contain;display:block;
-    -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,transparent 100%);
-            mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,transparent 100%);
-    filter:drop-shadow(0 6px 18px rgba(190,120,135,.25));}
-  .arc{position:absolute;inset:-12% -40% auto -40%;width:180%;height:80%;overflow:visible;pointer-events:none;}
-  .arc path.trail{fill:none;stroke:url(#trailGrad);stroke-width:3;stroke-linecap:round;stroke-dasharray:440px 620px;stroke-dashoffset:620px;
-    filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #ffd6e2);animation:starTrail 6s ease-in-out infinite;}
+  /* ===== Castillo estilo Disney con entrada de impacto ===== */
+  .castle-wrap{position:relative;width:min(270px,64vw);margin:0 auto 10px;aspect-ratio:560/943;}
+  .castle-wrap img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;display:block;
+    -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+            mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 70%,transparent 100%);
+    animation:castleReveal 2.8s ease-out both, castleFloat 7s ease-in-out 2.8s infinite;}
+  .halo{position:absolute;z-index:1;left:-35%;right:-35%;top:-10%;bottom:-5%;border-radius:50%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,236,200,.55) 45%,rgba(255,200,220,.25) 70%,transparent);
+    opacity:0;animation:haloOn 2.8s ease-out both, haloPulse 4s ease-in-out 2.8s infinite;}
+  .burst{position:absolute;z-index:3;left:46%;top:6%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,#fff 0%,rgba(255,244,200,.95) 30%,rgba(255,210,225,.5) 60%,transparent 72%);
+    opacity:0;animation:burst 1.5s cubic-bezier(.2,.7,.3,1) 1.55s both;}
+  .flash{position:fixed;inset:0;z-index:50;pointer-events:none;background:radial-gradient(circle at 50% 25%,rgba(255,255,255,1),rgba(255,246,220,.75) 40%,rgba(255,235,242,.35) 70%,transparent 90%);opacity:0;animation:flash 1.6s ease-out 1.55s both;}
+  .spark{position:absolute;z-index:4;left:46%;top:6%;color:#fff;font-size:16px;line-height:1;margin:-8px 0 0 -8px;pointer-events:none;
+    text-shadow:0 0 6px #fff,0 0 12px #ffd98a,0 0 18px #f7b6c9;opacity:0;animation:sparkOut 1.6s ease-out 1.6s both;}
+  .intro{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:5;pointer-events:none;}
+  @keyframes castleReveal{0%{opacity:0;transform:scale(.9);filter:blur(8px) brightness(.9);}
+    50%{opacity:.55;transform:scale(.97);filter:blur(2px) brightness(1);}
+    58%{opacity:1;filter:blur(0) brightness(1.7) drop-shadow(0 0 30px #fff);}
+    80%{filter:brightness(1.15) drop-shadow(0 0 18px rgba(255,255,255,.9));}
+    100%{opacity:1;transform:scale(1);filter:brightness(1) drop-shadow(0 6px 18px rgba(190,120,135,.25));}}
+  @keyframes castleFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+  @keyframes haloOn{0%,52%{opacity:0;transform:scale(.6);}62%{opacity:1;transform:scale(1.1);}100%{opacity:.75;transform:scale(1);}}
+  @keyframes haloPulse{0%,100%{opacity:.75;}50%{opacity:1;}}
+  @keyframes burst{0%{opacity:0;transform:scale(.2);}15%{opacity:1;}100%{opacity:0;transform:scale(40);}}
+  @keyframes flash{0%{opacity:0;}12%{opacity:1;}100%{opacity:0;}}
+  @keyframes sparkOut{0%{opacity:0;transform:translate(0,0) scale(.3);}15%{opacity:1;}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1) rotate(120deg);}}
+  .hero-inner>*:not(.castle-wrap){animation:fadeUp .9s ease-out both;}
+  .hero .hero-inner>.eyebrow{animation-delay:1.9s}.hero .hero-inner>h1{animation-delay:2.1s}.hero .hero-inner>p{animation-delay:2.3s}.hero .hero-inner>.date-badge{animation-delay:2.5s}
+  @keyframes fadeUp{0%{opacity:0;transform:translateY(14px);}100%{opacity:1;transform:none;}}
+  .arc{position:absolute;z-index:5;inset:-12% -40% auto -40%;width:180%;height:80%;overflow:visible;pointer-events:none;}
+  .arc path.trail{fill:none;stroke:url(#trailGrad);stroke-width:3;stroke-linecap:round;stroke-dasharray:440px 620px;stroke-dashoffset:620px;opacity:0;
+    filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 6px #ffd6e2);animation:starTrail 6s ease-in-out 4s infinite;}
   @keyframes starTrail{0%{stroke-dashoffset:620px;opacity:1;}55%{stroke-dashoffset:0px;opacity:1;}85%,100%{stroke-dashoffset:0px;opacity:0;}}
-  @media (prefers-reduced-motion:reduce){.arc path.trail{animation:none;}.arc path.trail{stroke-dashoffset:0;}}
+  @media (prefers-reduced-motion:reduce){.castle-wrap img,.halo,.hero-inner>*,.arc path.trail{animation:none;}.halo{opacity:.75}.burst,.flash,.spark,.intro{display:none;}}
 
   /* ===== Fondo acuarela animado ===== */
   body{background:#fdf1f3 !important;}
@@ -117,17 +141,36 @@
 </head>
 <body>
   <div class="sky" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><span class="twinkle" style="left:43%;top:22%;font-size:16px;animation-delay:-2.6s;animation-duration:3.2s">✦</span><span class="twinkle" style="left:70%;top:15%;font-size:13px;animation-delay:-2.3s;animation-duration:5.7s">✦</span><span class="twinkle" style="left:29%;top:7%;font-size:9px;animation-delay:-1.7s;animation-duration:3.2s">✦</span><span class="twinkle" style="left:13%;top:73%;font-size:16px;animation-delay:-0.2s;animation-duration:4.7s">✦</span><span class="twinkle" style="left:30%;top:83%;font-size:9px;animation-delay:-2.3s;animation-duration:4.2s">✦</span><span class="twinkle" style="left:30%;top:8%;font-size:11px;animation-delay:-1.2s;animation-duration:3.4s">✦</span><span class="twinkle" style="left:17%;top:76%;font-size:13px;animation-delay:-2.2s;animation-duration:5.0s">✦</span><span class="twinkle" style="left:15%;top:77%;font-size:11px;animation-delay:-1.5s;animation-duration:4.6s">✦</span><span class="twinkle" style="left:10%;top:75%;font-size:9px;animation-delay:-2.5s;animation-duration:4.5s">✦</span><span class="twinkle" style="left:70%;top:57%;font-size:13px;animation-delay:-1.9s;animation-duration:5.8s">✦</span><span class="twinkle" style="left:48%;top:41%;font-size:11px;animation-delay:-3.2s;animation-duration:5.1s">✦</span><span class="twinkle" style="left:33%;top:13%;font-size:13px;animation-delay:-2.1s;animation-duration:5.6s">✦</span><span class="twinkle" style="left:95%;top:60%;font-size:13px;animation-delay:-2.4s;animation-duration:3.2s">✦</span><span class="twinkle" style="left:67%;top:56%;font-size:11px;animation-delay:-3.0s;animation-duration:3.5s">✦</span><span class="twinkle" style="left:64%;top:56%;font-size:9px;animation-delay:-3.8s;animation-duration:3.2s">✦</span><span class="twinkle" style="left:73%;top:76%;font-size:13px;animation-delay:-1.4s;animation-duration:4.1s">✦</span><span class="twinkle" style="left:65%;top:77%;font-size:16px;animation-delay:-0.3s;animation-duration:3.3s">✦</span><span class="twinkle" style="left:36%;top:63%;font-size:9px;animation-delay:-0.2s;animation-duration:5.1s">✦</span><span class="twinkle" style="left:84%;top:76%;font-size:16px;animation-delay:-1.1s;animation-duration:4.2s">✦</span><span class="twinkle" style="left:87%;top:47%;font-size:9px;animation-delay:-3.8s;animation-duration:4.1s">✦</span><span class="twinkle" style="left:80%;top:17%;font-size:16px;animation-delay:-0.2s;animation-duration:5.3s">✦</span><span class="twinkle" style="left:18%;top:34%;font-size:16px;animation-delay:-1.6s;animation-duration:5.6s">✦</span><span class="twinkle" style="left:12%;top:24%;font-size:16px;animation-delay:-1.6s;animation-duration:3.8s">✦</span><span class="twinkle" style="left:19%;top:58%;font-size:13px;animation-delay:-2.8s;animation-duration:6.0s">✦</span><span class="twinkle" style="left:89%;top:51%;font-size:11px;animation-delay:-0.6s;animation-duration:3.5s">✦</span><span class="twinkle" style="left:31%;top:87%;font-size:11px;animation-delay:-0.0s;animation-duration:5.5s">✦</span><span class="floaty" style="left:26%;font-size:12px;animation-duration:22s;animation-delay:-0s">♡</span><span class="floaty" style="left:56%;font-size:14px;animation-duration:23s;animation-delay:-19s">☁︎</span><span class="floaty" style="left:43%;font-size:10px;animation-duration:29s;animation-delay:-27s">☁︎</span><span class="floaty" style="left:82%;font-size:14px;animation-duration:28s;animation-delay:-23s">♡</span><span class="floaty" style="left:61%;font-size:14px;animation-duration:30s;animation-delay:-17s">✧</span><span class="floaty" style="left:53%;font-size:12px;animation-duration:24s;animation-delay:-3s">✧</span><span class="floaty" style="left:84%;font-size:12px;animation-duration:18s;animation-delay:-6s">♡</span><span class="floaty" style="left:29%;font-size:12px;animation-duration:20s;animation-delay:-3s">✧</span><span class="floaty" style="left:79%;font-size:10px;animation-duration:19s;animation-delay:-0s">☁︎</span><span class="floaty" style="left:22%;font-size:14px;animation-duration:19s;animation-delay:-30s">✧</span><span class="floaty" style="left:81%;font-size:10px;animation-duration:19s;animation-delay:-27s">♡</span><span class="floaty" style="left:81%;font-size:12px;animation-duration:20s;animation-delay:-20s">✧</span></div>
+  <div class="flash" aria-hidden="true"></div>
   <header class="hero">
     <div class="hero-inner">
     <div class="castle-wrap">
       <img src="castle-small.webp" alt="Castillo de cuento" />
+      <div class="halo"></div>
+      <div class="burst"></div>
+      <span class="spark" style="--dx:-115px;--dy:49px;font-size:13px;animation-delay:1.71s">✦</span><span class="spark" style="--dx:117px;--dy:31px;font-size:10px;animation-delay:1.81s">✦</span><span class="spark" style="--dx:-147px;--dy:30px;font-size:16px;animation-delay:1.74s">✦</span><span class="spark" style="--dx:-64px;--dy:93px;font-size:20px;animation-delay:1.73s">✦</span><span class="spark" style="--dx:90px;--dy:73px;font-size:13px;animation-delay:1.70s">✦</span><span class="spark" style="--dx:-121px;--dy:-52px;font-size:20px;animation-delay:1.66s">✦</span><span class="spark" style="--dx:-125px;--dy:108px;font-size:10px;animation-delay:1.68s">✦</span><span class="spark" style="--dx:-137px;--dy:155px;font-size:10px;animation-delay:1.83s">✦</span><span class="spark" style="--dx:139px;--dy:-83px;font-size:16px;animation-delay:1.61s">✦</span><span class="spark" style="--dx:116px;--dy:94px;font-size:20px;animation-delay:1.67s">✦</span><span class="spark" style="--dx:90px;--dy:96px;font-size:20px;animation-delay:1.75s">✦</span><span class="spark" style="--dx:-86px;--dy:-66px;font-size:10px;animation-delay:1.77s">✦</span><span class="spark" style="--dx:-103px;--dy:-35px;font-size:16px;animation-delay:1.77s">✦</span><span class="spark" style="--dx:139px;--dy:70px;font-size:16px;animation-delay:1.68s">✦</span>
+      <svg class="intro" viewBox="0 0 560 943" aria-hidden="true">
+        <defs><linearGradient id="introTrail" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#ffe7b0" stop-opacity=".8"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+        <path d="M -650 -300 Q -120 -330 258 57" fill="none" stroke="url(#introTrail)" stroke-width="7" stroke-linecap="round" stroke-dasharray="1100" stroke-dashoffset="1100" opacity="0" style="filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px #ffd98a)">
+          <set attributeName="opacity" to="1" begin="0.3s"/>
+          <animate attributeName="stroke-dashoffset" from="1100" to="0" begin="0.3s" dur="1.3s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".5 0 .3 1"/>
+          <animate attributeName="opacity" from="1" to="0" begin="1.6s" dur=".8s" fill="freeze"/>
+        </path>
+        <g opacity="0">
+          <path d="M0 -28l7 20h21l-17 12 6 22-17-13-17 13 6-22-17-12h21z" fill="#fff8dc" style="filter:drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px #ffd98a) drop-shadow(0 0 30px #f7b6c9)"/>
+          <set attributeName="opacity" to="1" begin="0.3s"/>
+          <animateMotion begin="0.3s" dur="1.3s" fill="freeze" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines=".5 0 .3 1" path="M -650 -300 Q -120 -330 258 57"/>
+          <animateTransform attributeName="transform" type="rotate" from="0" to="360" begin="0.3s" dur="1.3s" additive="sum" fill="freeze"/>
+          <animate attributeName="opacity" from="1" to="0" begin="1.6s" dur=".4s" fill="freeze"/>
+        </g>
+      </svg>
       <svg class="arc" viewBox="0 0 410 200" aria-hidden="true">
         <defs><linearGradient id="trailGrad" x1="0" x2="1"><stop offset="0" stop-color="#f3b6c8" stop-opacity="0"/><stop offset=".5" stop-color="#eaa0b6" stop-opacity=".8"/><stop offset="1" stop-color="#ffe9a8"/></linearGradient></defs>
         <path class="trail" d="M 10 150 Q 190 -40 400 120"/>
         <g class="star2" opacity="0">
           <path d="M0 -11l3 8h8l-6.5 5 2.5 9-7-5.5-7 5.5 2.5-9-6.5-5h8z" fill="#fff6d6" style="filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 8px #f7b6c9)"/>
-          <animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.55;1" calcMode="spline" keySplines=".45 0 .55 1;0 0 1 1" path="M 10 150 Q 190 -40 400 120"/>
-          <animate attributeName="opacity" dur="6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.05;.55;.65;1"/>
+          <animateMotion dur="6s" begin="4s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.55;1" calcMode="spline" keySplines=".45 0 .55 1;0 0 1 1" path="M 10 150 Q 190 -40 400 120"/>
+          <animate attributeName="opacity" dur="6s" begin="4s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;.05;.55;.65;1"/>
         </g>
       </svg>
     </div>
