@@ -315,7 +315,7 @@ function renderCard(el, it){
   if(res.length){
     html += `<div class="reservers">`;
     res.forEach(r => {
-      html += `<div class="reserver"><span class="tick">✓</span><span class="who"><small>Apartado por</small><b>${escapeHtml(r.name)}</b></span><button class="free" data-free="${r.id}">Liberar</button></div>`;
+      html += `<div class="reserver"><span class="tick">✓</span><span class="who"><small>Apartado por</small><b>${escapeHtml(r.name)}</b></span></div>`;
     });
     html += `</div>`;
   }
@@ -370,13 +370,6 @@ async function confirmReserve(){
   await load();
 }
 
-async function freeReservation(rid){
-  if(!sb) return;
-  const { error } = await sb.from("reservas").delete().eq("id", rid);
-  if(error){ showToast("No se pudo liberar. Intenta de nuevo."); return; }
-  showToast("Regalo liberado 🩷");
-  await load();
-}
 
 let toastT;
 function showToast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("show"), 2600); }
@@ -384,8 +377,6 @@ function showToast(msg){ const t = $("#toast"); t.textContent = msg; t.classList
 document.addEventListener("click", e => {
   const r = e.target.closest("[data-reserve]");
   if(r){ const it = ITEM_BY_ID[r.getAttribute("data-reserve")]; if(it) openModal(it); return; }
-  const f = e.target.closest("[data-free]");
-  if(f){ freeReservation(f.getAttribute("data-free")); return; }
 });
 $("#cancelBtn").addEventListener("click", closeModal);
 $("#confirmBtn").addEventListener("click", confirmReserve);
